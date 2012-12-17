@@ -1,0 +1,24 @@
+{
+  "name": "webmaker-irc-stats",
+  "version": "0.1.0",
+  "author": "Christopher De Cairos",
+  "description": "Gets and sends metrics about webmaker irc channels",
+  "contributors": [
+    {
+      "name": "Christopher De Cairos",
+      "email": "chris@chrisdecairos.ca"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cadecairos/webmaker-irc-stats.git"
+  },
+  "dependencies": {
+    "node-irc": "x.x.x",
+    "ducksnode": "x.x.x"
+  },
+  "license": "MIT",
+  "engine": {
+    "node": ">=0.8"
+  }
+}
