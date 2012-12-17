@@ -14,8 +14,8 @@
     "url": "https://github.com/cadecairos/webmaker-irc-stats.git"
   },
   "dependencies": {
-    "node-irc": "x.x.x",
-    "ducksnode": "x.x.x"
+    "node-irc": "0.0.3",
+    "ducksnode": "0.1.0"
   },
   "license": "MIT",
   "engine": {
