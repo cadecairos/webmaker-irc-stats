@@ -1,3 +1,5 @@
+var VERSION = "0.1.0";
+
 var nodeIRC = require( 'node-irc' ),
     fs = require( 'fs' ),
     server = 'irc.mozilla.org',
@@ -15,6 +17,12 @@ function logMessage( data ) {
       console.log( err );
     }
   });
+
+  if ( /WebmakerMetrics(?::|:\s|\s)ping(\w\s)*/i.test( data.message ) ) {
+    client.say( data.receiver, "Hello " + data.sender + ". I'm not a real person, I just log channel messages. The logs are used to generate metrics data for the Webmaker dashboard." );
+  } else if ( /WebmakerMetrics(?::|:\s|\s)!version/i.test( data.message ) ) {
+    client.say( data.receiver, "This is WebmakerMetrics bot v" + VERSION );
+  }
 }
 
 function connect() {
