@@ -1,4 +1,7 @@
-var VERSION = "0.1.0";
+var VERSION = "0.1.0",
+    PASSWORD = "CHANGEME",
+    USERNAME = "WebmakerMetrics",
+    REALNAME = "USER";
 
 var nodeIRC = require( 'node-irc' ),
     fs = require( 'fs' ),
@@ -19,14 +22,14 @@ function logMessage( data ) {
   });
 
   if ( /WebmakerMetrics(?::|:\s|\s)ping(\w\s)*/i.test( data.message ) ) {
-    client.say( data.receiver, "Hello " + data.sender + ". I'm not a real person, I just log channel messages. The logs are used to generate metrics data for the Webmaker dashboard." );
+    client.say( data.receiver, "Hello " + data.sender + ". I'm not a real person, I just log channel messages. The logs are used to generate metrics data for the Webmaker dashboard. PS: Computers rule, Humans drool." );
   } else if ( /WebmakerMetrics(?::|:\s|\s)!version/i.test( data.message ) ) {
     client.say( data.receiver, "This is WebmakerMetrics bot v" + VERSION );
   }
 }
 
 function connect() {
-  client = new nodeIRC( server, port, 'WebmakerMetrics', 'Webmaker' );
+  client = new nodeIRC( server, port, USERNAME, REALNAME );
   client.on( 'ready', joinChannels );
   client.on( 'CHANMSG', logMessage );
   client.on( 'close', connect );
@@ -39,6 +42,9 @@ function joinChannels() {
   for ( var i = channels.length - 1; i >= 0; i-- ) {
     name = channels[ i ];
     client.join( name );
+  }
+  if ( PASSWORD != "CHANGEME" ) {
+    client.say( "nickserv", "identify " + PASSWORD );
   }
 }
 
