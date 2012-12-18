@@ -9,8 +9,8 @@ var nodeIRC = require( 'node-irc' ),
     port = 6667,
     channels = [ '#popcorn', '#webmaker', '#mofodev', '#foundation', '#openbadges' ],
     logDir = 'logs/',
-    pingRegex = new RegExp( USERNAME + '(?::|:\s|\s)ping(\w\s)*', 'i' ),
-    versionRegex = new RegExp( USERNAME + '(?::|:\s|\s)!version', 'i' ),
+    pingRegex = new RegExp( USERNAME + '(?::|:\\s|\\s)ping(\\w\\s)*', 'i' ),
+    versionRegex = new RegExp( USERNAME + '(?::|:\\s|\\s)!version', 'i' ),
     client;
 
 function logMessage( data ) {
