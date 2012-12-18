@@ -1,7 +1,7 @@
-var VERSION = "0.1.0",
-    PASSWORD = "CHANGEME",
-    USERNAME = "WebmakerMetrics",
-    REALNAME = "USER";
+var VERSION = '0.1.0',
+    PASSWORD = 'CHANGEME',
+    USERNAME = 'WebmakerMetrics',
+    REALNAME = 'USER';
 
 var nodeIRC = require( 'node-irc' ),
     fs = require( 'fs' ),
@@ -9,6 +9,8 @@ var nodeIRC = require( 'node-irc' ),
     port = 6667,
     channels = [ '#popcorn', '#webmaker', '#mofodev', '#foundation', '#openbadges' ],
     logDir = 'logs/',
+    pingRegex = new RegExp( USERNAME + '(?::|:\s|\s)ping(\w\s)*', 'i' ),
+    versionRegex = new RegExp( USERNAME + '(?::|:\s|\s)!version', 'i' ),
     client;
 
 function logMessage( data ) {
@@ -21,10 +23,10 @@ function logMessage( data ) {
     }
   });
 
-  if ( /WebmakerMetrics(?::|:\s|\s)ping(\w\s)*/i.test( data.message ) ) {
-    client.say( data.receiver, "Hello " + data.sender + ". I'm not a real person, I just log channel messages. The logs are used to generate metrics data for the Webmaker dashboard. PS: Computers rule, Humans drool." );
-  } else if ( /WebmakerMetrics(?::|:\s|\s)!version/i.test( data.message ) ) {
-    client.say( data.receiver, "This is WebmakerMetrics bot v" + VERSION );
+  if ( pingRegex.test( data.message ) ) {
+    client.say( data.receiver, 'Hello ' + data.sender + '. I\'m not a real person, I just log channel messages. The logs are used to generate metrics data for the Webmaker dashboard. PS: Computers rule, Humans drool.' );
+  } else if ( versionRegex.test( data.message ) ) {
+    client.say( data.receiver, 'This is WebmakerMetrics bot v' + VERSION + '. Visit https://github.com/cadecairos/webmaker-irc-stats for the source code.' );
   }
 }
 
@@ -43,8 +45,8 @@ function joinChannels() {
     name = channels[ i ];
     client.join( name );
   }
-  if ( PASSWORD != "CHANGEME" ) {
-    client.say( "nickserv", "identify " + PASSWORD );
+  if ( PASSWORD != 'CHANGEME' ) {
+    client.say( 'nickserv', 'identify ' + PASSWORD );
   }
 }
 
