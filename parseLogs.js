@@ -55,7 +55,6 @@ function buildLeaderBoard() {
     }
   }
 
-// console.log( board );
   board.sort(function( a, b ){
     return +a.values[ 0 ] - +b.values[ 0 ];
   }).reverse();
@@ -69,9 +68,7 @@ function parseData( data, name ) {
   var regexResults = [],
       result,
       lineResult,
-      nick,
-      date,
-      message;
+      date;
 
   data = data.split( '\n' );
 
@@ -84,11 +81,14 @@ function parseData( data, name ) {
 
   for ( var i = regexResults.length - 1; i >= 0; i-- ) {
     lineResult = regexResults[ i ];
-    parsedData.unshift({
-      nick: lineResult[ 1 ],
-      date: new Date( +lineResult[ 2 ] ),
-      message: lineResult[ 3 ]
-    });
+    date = new Date( +lineResult[ 2 ] );
+    if (Date.now() - date <= ONE_HOUR ) {
+      parsedData.unshift({
+        'nick': lineResult[ 1 ],
+        'date': new Date( +lineResult[ 2 ] ),
+        'message': lineResult[ 3 ]
+      });
+    }
   }
 }
 
@@ -97,8 +97,9 @@ for ( var i = logs.length - 1; i >= 0; i-- ) {
   channelName = logFileName.replace( '#', '' );
   logData = fs.readFileSync( LOG_DIR + logFileName, 'utf-8' );
   parseData( logData, channelName );
-  sortByNick();
 }
+
+sortByNick();
 
 var options = {
   api_key: API_KEY
